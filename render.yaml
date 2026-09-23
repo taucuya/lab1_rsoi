@@ -1,0 +1,20 @@
+databases:
+  - name: lab1-rsoi-postgres
+    plan: free
+    databaseName: persons
+    user: program
+
+services:
+  - type: web
+    name: lab1-rsoi
+    plan: free
+    env: docker
+    dockerfilePath: ./Dockerfile
+    autoDeploy: false
+    region: frankfurt
+    healthCheckPath: /api/v1/persons
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: lab1-rsoi-postgres
+          property: connectionString
